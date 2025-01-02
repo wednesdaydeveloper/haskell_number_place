@@ -50,6 +50,6 @@ replace :: Grid -> (Int, Int) -> Maybe Int -> Grid
 replace grid (row, col) val = take row grid ++ [take col (grid !! row) ++ [val] ++ drop (col + 1) (grid !! row)] ++ drop (row + 1) grid
 
 -- 文字列をMaybe Intに変換する関数
-parseCell :: Char -> Maybe Int
-parseCell c | '1' <= c && c <= '9' = Just (read [c])
+parseCell :: Int -> Maybe Int
+parseCell c | 1 <= c && c <= 9 = Just c
 parseCell _ = Nothing
