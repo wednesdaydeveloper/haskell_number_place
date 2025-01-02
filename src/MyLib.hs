@@ -1,14 +1,14 @@
-module MyLib (parseCell, printGrid, solve) where
+module MyLib (parseCell, getGridString, solve) where
 
 import Data.Maybe (isNothing)
 
 type Grid = [[Maybe Int]]
 
--- グリッドを表示する関数
-printGrid :: Grid -> IO ()
-printGrid grid = do
-  mapM_ (putStrLn . concatMap (\cell -> maybe "." show cell ++ " ")) grid
-  putStrLn ""
+-- グリッドを文字列化する関数
+getGridString :: Grid -> String
+getGridString grid =
+  unlines $ map (concatMap (\cell -> maybe "." show cell ++ " ")) grid
+
 
 -- 空いているマスを探す関数
 findEmpty :: Grid -> Maybe (Int, Int)
@@ -56,6 +56,5 @@ replace grid (row, col) val = take row grid ++ [take col (grid !! row) ++ [val] 
 
 -- 文字列をMaybe Intに変換する関数
 parseCell :: Char -> Maybe Int
-parseCell '0' = Nothing
 parseCell c | '1' <= c && c <= '9' = Just (read [c])
-parseCell _ = error "Invalid input"
+parseCell _ = Nothing

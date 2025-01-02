@@ -1,6 +1,6 @@
 module Main where
 import Data.Maybe (listToMaybe)
-import MyLib (parseCell, printGrid, solve)
+import MyLib (parseCell, getGridString, solve)
 import Control.Monad (when)
 
 main :: IO ()
@@ -18,11 +18,11 @@ main = do
         ]
   let initialGrid = map (map parseCell) initialGridStr
   putStrLn "初期盤面:"
-  printGrid initialGrid
+  putStrLn $ getGridString initialGrid
   let solutions = solve initialGrid
   case listToMaybe solutions of
     Nothing -> putStrLn "解が見つかりませんでした"
     Just solution -> do
       putStrLn "唯一の解:"
-      printGrid solution
+      putStrLn $ getGridString solution
   when (length solutions > 1) $ putStrLn "複数解あります"
