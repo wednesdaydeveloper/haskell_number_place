@@ -7,7 +7,7 @@ type Grid = [[Maybe Int]]
 -- グリッドを文字列化する関数
 getGridString :: Grid -> String
 getGridString grid =
-  unlines $ map (concatMap (\cell -> maybe "." show cell ++ " ")) grid
+  unlines $ map (concatMap (\cell -> (maybe "." show cell) ++ " ")) grid
 
 
 -- 空いているマスを探す関数
@@ -41,14 +41,9 @@ isValid grid (row, col) num =
 solve :: Grid -> [Grid]
 solve grid =
   case findEmpty grid of
-    Nothing -> [grid] -- 全てのマスが埋まった
-    Just (row, col) -> do
-      num <- [1 .. 9]
-      if isValid grid (row, col) num
-        then
-          let newGrid = replace grid (row, col) (Just num)
-          in solve newGrid
-        else []
+    Nothing -> [grid]
+    Just (row, col) ->
+      [ solvedGrid | num <- [1..9], isValid grid (row, col) num, let newGrid = replace grid (row, col) (Just num), solvedGrid <- solve newGrid ]
 
 -- グリッドの要素を置き換えるヘルパー関数
 replace :: Grid -> (Int, Int) -> Maybe Int -> Grid
