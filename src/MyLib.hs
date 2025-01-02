@@ -1,6 +1,6 @@
-module Main where
+module MyLib (parseCell, printGrid, solve) where
 
-import Data.Maybe (isNothing, listToMaybe)
+import Data.Maybe (isNothing)
 
 type Grid = [[Maybe Int]]
 
@@ -59,27 +59,3 @@ parseCell :: Char -> Maybe Int
 parseCell '0' = Nothing
 parseCell c | '1' <= c && c <= '9' = Just (read [c])
 parseCell _ = error "Invalid input"
-
-main :: IO ()
-main = do
-  let initialGridStr = [
-        "000000000",
-        "016000590",
-        "400307002",
-        "700050001",
-        "800000009",
-        "060000070",
-        "005000600",
-        "000203000",
-        "000070000"
-        ]
-  let initialGrid = map (map parseCell) initialGridStr
-  putStrLn "初期盤面:"
-  printGrid initialGrid
-  let solutions = solve initialGrid
-  case listToMaybe solutions of
-    Nothing -> putStrLn "解が見つかりませんでした"
-    Just solution -> do
-      putStrLn "唯一の解:"
-      printGrid solution
-  if length solutions > 1 then putStrLn "複数解あります" else return ()
