@@ -1,6 +1,7 @@
 module Main where
-import Data.Maybe (listToMaybe) 
+import Data.Maybe (listToMaybe)
 import MyLib (parseCell, printGrid, solve)
+import Control.Monad (when)
 
 main :: IO ()
 main = do
@@ -24,4 +25,4 @@ main = do
     Just solution -> do
       putStrLn "唯一の解:"
       printGrid solution
-  if length solutions > 1 then putStrLn "複数解あります" else return ()
+  when (length solutions > 1) $ putStrLn "複数解あります"

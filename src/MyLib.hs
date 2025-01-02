@@ -7,12 +7,12 @@ type Grid = [[Maybe Int]]
 -- グリッドを表示する関数
 printGrid :: Grid -> IO ()
 printGrid grid = do
-  mapM_ (\row -> putStrLn $ concatMap (\cell -> maybe "." show cell ++ " ") row) grid
+  mapM_ (putStrLn . concatMap (\cell -> maybe "." show cell ++ " ")) grid
   putStrLn ""
 
 -- 空いているマスを探す関数
 findEmpty :: Grid -> Maybe (Int, Int)
-findEmpty grid = findEmpty' 0 0 grid
+findEmpty = findEmpty' 0 0
   where
     findEmpty' :: Int -> Int -> Grid -> Maybe (Int, Int)
     findEmpty' row col g
@@ -47,7 +47,7 @@ solve grid =
       if isValid grid (row, col) num
         then
           let newGrid = replace grid (row, col) (Just num)
-           in solve newGrid
+          in solve newGrid
         else []
 
 -- グリッドの要素を置き換えるヘルパー関数
