@@ -43,7 +43,11 @@ solve grid =
   case findEmpty grid of
     Nothing -> [grid]
     Just (row, col) ->
-      [ solvedGrid | num <- [1..9], isValid grid (row, col) num, let newGrid = replace grid (row, col) (Just num), solvedGrid <- solve newGrid ]
+      [ solvedGrid | 
+        num <- [1..9],
+        isValid grid (row, col) num,
+        let newGrid = replace grid (row, col) (Just num),
+        solvedGrid <- solve newGrid ]
 
 -- グリッドの要素を置き換えるヘルパー関数
 replace :: Grid -> (Int, Int) -> Maybe Int -> Grid
