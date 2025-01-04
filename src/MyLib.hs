@@ -31,9 +31,9 @@ isValid grid (row, col) num =
     checkCol :: Bool
     checkCol = any (\r -> (grid !! r !! col) == Just num) [0 .. 8]
     blockRow :: Int
-    blockRow = row `quot` 3 -- divをquotに変更
+    blockRow = row `div` 3
     blockCol :: Int
-    blockCol = col `quot` 3 -- divをquotに変更
+    blockCol = col `div` 3
     checkBlock :: Bool
     checkBlock = any (\r -> any (\c -> (grid !! (blockRow * 3 + r) !! (blockCol * 3 + c)) == Just num) [0 .. 2]) [0 .. 2]
 
